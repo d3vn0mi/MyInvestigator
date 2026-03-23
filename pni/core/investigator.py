@@ -40,7 +40,20 @@ class Investigator:
                 console.print(f"[dim]Using cached results for {query.value}[/dim]")
                 return InvestigationResult(
                     query=query,
-                    results=[SourceResult(**r) for r in cached["results"]],
+                    results=[
+                        SourceResult(
+                            source_name=r.get("source", r.get("source_name", "")),
+                            category=r.get("category", ""),
+                            status=r.get("status", ""),
+                            data=r.get("data", {}),
+                            url=r.get("url", ""),
+                            title=r.get("title", ""),
+                            snippet=r.get("snippet", ""),
+                            confidence=r.get("confidence", 0.0),
+                            timestamp=r.get("timestamp", ""),
+                        )
+                        for r in cached["results"]
+                    ],
                     timestamp=cached.get("timestamp", ""),
                 )
 
